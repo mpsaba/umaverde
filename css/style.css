@@ -405,6 +405,11 @@ h3.title-w3l:before {
 	-moz-box-shadow: -1px 6px 12px -3px rgba(0,0,0,0.62);
 	box-shadow: -1px 6px 12px -3px rgba(0,0,0,0.62);
 }
+.about-text {
+	font-family: Tahoma,Verdana,sans-serif;
+	font-size: 1.5em;
+	font-weight:lighter;
+}
 .ab-agile1 h4{
 	background:#f7a613;
 }
@@ -413,6 +418,9 @@ h3.title-w3l:before {
 }
 .ab-agile3 h4{
 	background:#ef1861;
+}
+.ab-agile4 h4{
+	background:#833ab4;
 }
 /*-- //about --*/
 /*-- middle --*/
@@ -672,6 +680,7 @@ i.fa.fa-cutlery {
 }
 .price-bg ul li{
 	list-style: none;
+	padding: 0;
 }
 .cart1,.cart2,.cart3{
 	padding: 2.7em 0em 2.7em;
