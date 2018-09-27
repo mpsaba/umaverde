@@ -453,7 +453,8 @@ i.fa.fa-cutlery {
     letter-spacing: 2px;
 }
 .projects-grid-caption {
-    background: rgba(0, 0, 0, 0.35);
+	/* background: rgba(0, 0, 0, 0.35); */
+	/* background-color: transparent; */
     position: absolute;
     left: 0;
     bottom: -177%;
