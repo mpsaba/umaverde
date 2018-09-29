@@ -61,7 +61,19 @@
         } else {
             $errorMessage = mysqli_error($conn);
         }   
-	}
+    }
+    
+    if(isset($_GET["state"])){
+        if ($_GET["state"] == "delete") {
+            $sql = "DELETE FROM tbl_user WHERE id ='" . $_GET["id"] . "'";
+
+            if (!mysqli_query($conn, $sql)) {
+                $errorMessage = mysqli_error($conn);
+            }else{
+                echo "<script> window.location.href='user.php'; </script>";
+            }
+        }
+    }
 	
 	?>
 <html lang="en">
@@ -207,9 +219,12 @@
 												    echo "<td style=\"vertical-align: middle;\">" . $r['contactNo'] . "</td>";
 												    echo "<td style=\"text-align: center; width:15%\">";
 												    ?>
-											<button type="button" class="btn btn-warning btn-circle btn-xs"
+											<button type="button" class="btn btn-warning btn-circle btn-s"
 												onclick="return window.location.href='user.php?state=edit&id=<?php echo $r['id']; ?>'">
-											<i class="fa fa-edit"></i></button>
+                                            <i class="fa fa-edit"></i></button>&nbsp;&nbsp;
+                                            <button type="button" class="btn btn-danger btn-circle btn-s"
+												onclick="return window.location.href='user.php?state=delete&id=<?php echo $r['id']; ?>'">
+											<i class="fa fa-trash"></i></button>
 											<?php }?>
 										</tbody>
 									</table>
