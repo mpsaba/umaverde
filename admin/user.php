@@ -70,7 +70,7 @@
             if (!mysqli_query($conn, $sql)) {
                 $errorMessage = mysqli_error($conn);
             }else{
-                echo "<script> window.location.href='user.php'; </script>";
+                echo "<script> window.location.href='user.php#'; </script>";
             }
         }
     }
@@ -222,9 +222,10 @@
 											<button type="button" class="btn btn-warning btn-circle btn-s"
 												onclick="return window.location.href='user.php?state=edit&id=<?php echo $r['id']; ?>'">
                                             <i class="fa fa-edit"></i></button>&nbsp;&nbsp;
-                                            <button type="button" class="btn btn-danger btn-circle btn-s"
-												onclick="return window.location.href='user.php?state=delete&id=<?php echo $r['id']; ?>'">
-											<i class="fa fa-trash"></i></button>
+                                            <a type="button" class="btn btn-danger btn-circle btn-s"
+												onclick="return confirm('Are you sure want to delete this?');"								
+												href="user.php?state=delete&id=<?php echo $r['id']; ?>">
+											<i class="fa fa-trash"></i></a>
 											<?php }?>
 										</tbody>
 									</table>
@@ -251,12 +252,9 @@
 								    $inputUsername = $r["username"];
 								    $inputFullname = $r["fullname"];
                                     $inputContactNo = $r["contactNo"];
-                                    $url = "user.php?state=edit&id=" . $_GET["id"];
-								}else{
-                                    $url = "user.php?state=new";
                                 }
 								?>
-							<form action="user.php" method="post">
+							<form action="user.php#" method="post">
 								<div class="form-group">
                                     <label for="inputUsername" class="col-form-label">Username</label>
                                     <input type="hidden" name="id" value="<?php echo $id; ?>">
@@ -306,8 +304,6 @@
             if (isset($_GET["state"])) {
                 if ($_GET["state"] == "new" || $_GET["state"] == "edit") {
                     echo "$('#userModal').modal('show')";
-                } else if ($_GET["state"] == "delete") {
-                    echo "confirm('Are you sure want to delete this?');";
                 }
             }
             ?>
