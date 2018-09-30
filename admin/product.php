@@ -18,7 +18,7 @@
 	if (isset($_POST["submit"])) {
 
 	    $inputFullname = $_POST["inputFullname"];
-		$inputContactNo = $_POST["inputContactNo"];
+	    $inputContactNo = $_POST["inputContactNo"];
         $errorMessage = null;
 
         if($_POST["id"] == null){
@@ -31,14 +31,11 @@
 
         }else{
             
-		date_default_timezone_set('Asia/Singapore');
-		$updatedAt = date("Y/m/d H:i:s");
             if ($_POST["inputUsername"] == $_POST["oldUsername"]) {
 
                 $sql = "UPDATE tbl_user SET
                 fullname='" . $inputFullname . "',
-                contactNo='" . $inputContactNo . "',
-				updatedAt='" . $updatedAt . "'
+                contactNo='" . $inputContactNo . "'
                 WHERE id ='" . $_POST["id"] . "'";
     
             } else {
@@ -47,8 +44,7 @@
                 $sql = "UPDATE tbl_user SET
                 username='" . $inputUsername . "',
                 fullname='" . $inputFullname . "',
-                contactNo='" . $inputContactNo . "',
-				updatedAt='" . $updatedAt . "'
+                contactNo='" . $inputContactNo . "'
                 WHERE id ='" . $_POST["id"] . "'";
     
             }
@@ -184,7 +180,7 @@
 			<div id="page-wrapper">
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 class="page-header">Users Management</h1>
+						<h1 class="page-header">Products Management</h1>
 					</div>
 					<div class="row">
 						<div class="col-lg-12">
@@ -217,7 +213,7 @@
 											<?php
 												$q = mysqli_query($conn, "SELECT * FROM tbl_user");
 												while ($r = mysqli_fetch_array($q)) {
-                                                    echo "<tr><td style=\"vertical-align: middle;\">" . $r['updatedAt'] . "</td>";
+                                                    echo "<tr><td style=\"vertical-align: middle;\">" . $r['createdAt'] . "</td>";
 												    echo "<td style=\"vertical-align: middle;\">" . $r['username'] . "</td>";
 												    echo "<td style=\"vertical-align: middle;\">" . $r['fullname'] . "</td>";
 												    echo "<td style=\"vertical-align: middle;\">" . $r['contactNo'] . "</td>";
@@ -293,11 +289,9 @@
 		<script src="../dist/js/sb-admin-2.js"></script>
 		<script>
 			$(document).ready(function () {
-			    var table = $('#dataTables-example').DataTable({
-					responsive: true
-				});
-
-				table.order([0, 'desc']).draw();
+			    $('#dataTables-example').DataTable({
+			        responsive: true
+			    });
             });
 
             $('#userModal').on('show.bs.modal', function (event) {
