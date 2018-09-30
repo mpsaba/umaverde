@@ -3,86 +3,87 @@
 	include 'conn.php';
 	session_start();
 	
-	// if (!isset($_SESSION["uid"])) {
-	//     echo "<script> window.location.href = 'index.php';</script>";
-	// } else {
-	// }
+	if (!isset($_SESSION["uid"])) {
+	    echo "<script> window.location.href = 'index.php';</script>";
+	} else {
 	$id = null;
-    $state = "";
-    $oldUsername = "";
+	   $state = "";
+	   $oldUsername = "";
 	$inputUsername = "";
 	$inputFullname = "";
 	$inputContactNo = "";
 	$errorMessage = null;
 	
 	if (isset($_POST["submit"])) {
-
+	
 	    $inputFullname = $_POST["inputFullname"];
 		$inputContactNo = $_POST["inputContactNo"];
-        $errorMessage = null;
-
-        if($_POST["id"] == null){
-
-            $inputUsername = $_POST["inputUsername"];
-            $password = md5("123456");
-    
-            $sql = "INSERT INTO tbl_user(username,password,fullname,contactNo)
-            VALUES('" . $inputUsername . "','" . $password . "','" . $inputFullname . "','" . $inputContactNo . "')";        
-
-        }else{
-            
+	       $errorMessage = null;
+	
+	       if($_POST["id"] == null){
+	
+	           $inputUsername = $_POST["inputUsername"];
+	           $password = md5("123456");
+	   
+	           $sql = "INSERT INTO tbl_user(username,password,fullname,contactNo)
+	           VALUES('" . $inputUsername . "','" . $password . "','" . $inputFullname . "','" . $inputContactNo . "')";        
+	
+	       }else{
+	           
 		date_default_timezone_set('Asia/Singapore');
 		$updatedAt = date("Y/m/d H:i:s");
-            if ($_POST["inputUsername"] == $_POST["oldUsername"]) {
-
-                $sql = "UPDATE tbl_user SET
-                fullname='" . $inputFullname . "',
-                contactNo='" . $inputContactNo . "',
+	           if ($_POST["inputUsername"] == $_POST["oldUsername"]) {
+	
+	               $sql = "UPDATE tbl_user SET
+	               fullname='" . $inputFullname . "',
+	               contactNo='" . $inputContactNo . "',
 				updatedAt='" . $updatedAt . "'
-                WHERE id ='" . $_POST["id"] . "'";
-    
-            } else {
-                
-                $inputUsername = $_POST["inputUsername"];
-                $sql = "UPDATE tbl_user SET
-                username='" . $inputUsername . "',
-                fullname='" . $inputFullname . "',
-                contactNo='" . $inputContactNo . "',
+	               WHERE id ='" . $_POST["id"] . "'";
+	   
+	           } else {
+	               
+	               $inputUsername = $_POST["inputUsername"];
+	               $sql = "UPDATE tbl_user SET
+	               username='" . $inputUsername . "',
+	               fullname='" . $inputFullname . "',
+	               contactNo='" . $inputContactNo . "',
 				updatedAt='" . $updatedAt . "'
-                WHERE id ='" . $_POST["id"] . "'";
-    
-            }
-    
-        }
-
-        if (mysqli_query($conn, $sql)) {
-            $id = "";
-            $state = "";
-            $oldUsername = "";
-            $inputUsername = "";
-            $inputFullname = "";
-            $inputContactNo = "";
-        } else {
-            $errorMessage = mysqli_error($conn);
-        }   
-    }
-    
-    if(isset($_GET["state"])){
-        if ($_GET["state"] == "delete") {
-            $sql = "DELETE FROM tbl_user WHERE id ='" . $_GET["id"] . "'";
-
-            if (!mysqli_query($conn, $sql)) {
-                $errorMessage = mysqli_error($conn);
-            }else{
-                echo "<script> window.location.href='user.php#'; </script>";
-            }
-        }
-    }
+	               WHERE id ='" . $_POST["id"] . "'";
+	   
+	           }
+	   
+	       }
+	
+	       if (mysqli_query($conn, $sql)) {
+	           $id = "";
+	           $state = "";
+	           $oldUsername = "";
+	           $inputUsername = "";
+	           $inputFullname = "";
+	           $inputContactNo = "";
+	       } else {
+	           $errorMessage = mysqli_error($conn);
+	       }   
+	   }
+	   
+	   if(isset($_GET["state"])){
+	       if ($_GET["state"] == "delete") {
+	           $sql = "DELETE FROM tbl_user WHERE id ='" . $_GET["id"] . "'";
+	
+	           if (!mysqli_query($conn, $sql)) {
+	               $errorMessage = mysqli_error($conn);
+	           }else{
+	               echo "<script> window.location.href='user.php#'; </script>";
+	           }
+	       }
+	   }
+	}
 	
 	?>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="">
 		<meta name="author" content="">
@@ -217,7 +218,7 @@
 											<?php
 												$q = mysqli_query($conn, "SELECT * FROM tbl_user");
 												while ($r = mysqli_fetch_array($q)) {
-                                                    echo "<tr><td style=\"vertical-align: middle;\">" . $r['updatedAt'] . "</td>";
+												                                        echo "<tr><td style=\"vertical-align: middle;\">" . $r['updatedAt'] . "</td>";
 												    echo "<td style=\"vertical-align: middle;\">" . $r['username'] . "</td>";
 												    echo "<td style=\"vertical-align: middle;\">" . $r['fullname'] . "</td>";
 												    echo "<td style=\"vertical-align: middle;\">" . $r['contactNo'] . "</td>";
@@ -225,8 +226,8 @@
 												    ?>
 											<button type="button" class="btn btn-warning btn-circle btn-s"
 												onclick="return window.location.href='user.php?state=edit&id=<?php echo $r['id']; ?>'">
-                                            <i class="fa fa-edit"></i></button>&nbsp;&nbsp;
-                                            <a type="button" class="btn btn-danger btn-circle btn-s"
+											<i class="fa fa-edit"></i></button>&nbsp;&nbsp;
+											<a type="button" class="btn btn-danger btn-circle btn-s"
 												onclick="return confirm('Are you sure want to delete this?');"								
 												href="user.php?state=delete&id=<?php echo $r['id']; ?>">
 											<i class="fa fa-trash"></i></a>
@@ -249,20 +250,20 @@
 						<div class="modal-body">
 							<?php
 								if (isset($_GET["id"])) {
-                                    $id = $_GET["id"];
+								                            $id = $_GET["id"];
 								    $q = mysqli_query($conn, "SELECT * FROM tbl_user WHERE id='" . $_GET["id"] . "'");
-                                    $r = mysqli_fetch_array($q);
-                                    $oldUsername = $r["username"];
+								                            $r = mysqli_fetch_array($q);
+								                            $oldUsername = $r["username"];
 								    $inputUsername = $r["username"];
 								    $inputFullname = $r["fullname"];
-                                    $inputContactNo = $r["contactNo"];
-                                }
+								                            $inputContactNo = $r["contactNo"];
+								                        }
 								?>
 							<form action="user.php#" method="post">
 								<div class="form-group">
-                                    <label for="inputUsername" class="col-form-label">Username</label>
-                                    <input type="hidden" name="id" value="<?php echo $id; ?>">
-                                    <input type="hidden" name="oldUsername" value="<?php echo $oldUsername; ?>">
+									<label for="inputUsername" class="col-form-label">Username</label>
+									<input type="hidden" name="id" value="<?php echo $id; ?>">
+									<input type="hidden" name="oldUsername" value="<?php echo $oldUsername; ?>">
 									<input type="text" class="form-control" name="inputUsername" value="<?php echo $inputUsername; ?>" required>
 								</div>
 								<div class="form-group">
@@ -296,23 +297,23 @@
 			    var table = $('#dataTables-example').DataTable({
 					responsive: true
 				});
-
+			
 				table.order([0, 'desc']).draw();
-            });
-
-            $('#userModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget)
-                var event = button.data('event');
-                $state = event;
-            });
-
-            <?php
-            if (isset($_GET["state"])) {
-                if ($_GET["state"] == "new" || $_GET["state"] == "edit") {
-                    echo "$('#userModal').modal('show')";
-                }
-            }
-            ?>
+			         });
+			
+			         $('#userModal').on('show.bs.modal', function (event) {
+			             var button = $(event.relatedTarget)
+			             var event = button.data('event');
+			             $state = event;
+			         });
+			
+			         <?php
+				if (isset($_GET["state"])) {
+				    if ($_GET["state"] == "new" || $_GET["state"] == "edit") {
+				        echo "$('#userModal').modal('show')";
+				    }
+				}
+				?>
 		</script>
 	</body>
 </html>
