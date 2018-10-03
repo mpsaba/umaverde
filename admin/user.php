@@ -1,85 +1,85 @@
 <!DOCTYPE html>
 <?php
-	include 'conn.php';
-	session_start();
-	
-	if (!isset($_SESSION["uid"])) {
-	    echo "<script> window.location.href = 'index.php';</script>";
-	} else {
-	$id = null;
-	   $state = "";
-	   $oldUsername = "";
-	$inputUsername = "";
-	$inputFullname = "";
-	$inputContactNo = "";
-	$errorMessage = null;
-	
-	if (isset($_POST["submit"])) {
-	
-	    $inputFullname = $_POST["inputFullname"];
-		$inputContactNo = $_POST["inputContactNo"];
-	       $errorMessage = null;
-	
-	       if($_POST["id"] == null){
-	
-	           $inputUsername = $_POST["inputUsername"];
-	           $password = md5("123456");
-	   
-	           $sql = "INSERT INTO tbl_user(username,password,fullname,contactNo)
-	           VALUES('" . $inputUsername . "','" . $password . "','" . $inputFullname . "','" . $inputContactNo . "')";        
-	
-	       }else{
-	           
-		date_default_timezone_set('Asia/Singapore');
-		$updatedAt = date("Y/m/d H:i:s");
-	           if ($_POST["inputUsername"] == $_POST["oldUsername"]) {
-	
-	               $sql = "UPDATE tbl_user SET
+include 'conn.php';
+session_start();
+
+if (!isset($_SESSION["uid"])) {
+    echo "<script> window.location.href = 'index.php';</script>";
+} else {
+    $id = null;
+    $state = "";
+    $oldUsername = "";
+    $inputUsername = "";
+    $inputFullname = "";
+    $inputContactNo = "";
+    $errorMessage = null;
+
+    if (isset($_POST["submit"])) {
+
+        $inputFullname = $_POST["inputFullname"];
+        $inputContactNo = $_POST["inputContactNo"];
+        $errorMessage = null;
+
+        if ($_POST["id"] == null) {
+
+            $inputUsername = $_POST["inputUsername"];
+            $password = md5("123456");
+
+            $sql = "INSERT INTO tbl_user(username,password,fullname,contactNo)
+	           VALUES('" . $inputUsername . "','" . $password . "','" . $inputFullname . "','" . $inputContactNo . "')";
+
+        } else {
+
+            date_default_timezone_set('Asia/Singapore');
+            $updatedAt = date("Y/m/d H:i:s");
+            if ($_POST["inputUsername"] == $_POST["oldUsername"]) {
+
+                $sql = "UPDATE tbl_user SET
 	               fullname='" . $inputFullname . "',
 	               contactNo='" . $inputContactNo . "',
 				updatedAt='" . $updatedAt . "'
 	               WHERE id ='" . $_POST["id"] . "'";
-	   
-	           } else {
-	               
-	               $inputUsername = $_POST["inputUsername"];
-	               $sql = "UPDATE tbl_user SET
+
+            } else {
+
+                $inputUsername = $_POST["inputUsername"];
+                $sql = "UPDATE tbl_user SET
 	               username='" . $inputUsername . "',
 	               fullname='" . $inputFullname . "',
 	               contactNo='" . $inputContactNo . "',
 				updatedAt='" . $updatedAt . "'
 	               WHERE id ='" . $_POST["id"] . "'";
-	   
-	           }
-	   
-	       }
-	
-	       if (mysqli_query($conn, $sql)) {
-	           $id = "";
-	           $state = "";
-	           $oldUsername = "";
-	           $inputUsername = "";
-	           $inputFullname = "";
-	           $inputContactNo = "";
-	       } else {
-	           $errorMessage = mysqli_error($conn);
-	       }   
-	   }
-	   
-	   if(isset($_GET["state"])){
-	       if ($_GET["state"] == "delete") {
-	           $sql = "DELETE FROM tbl_user WHERE id ='" . $_GET["id"] . "'";
-	
-	           if (!mysqli_query($conn, $sql)) {
-	               $errorMessage = mysqli_error($conn);
-	           }else{
-	               echo "<script> window.location.href='user.php#'; </script>";
-	           }
-	       }
-	   }
-	}
-	
-	?>
+
+            }
+
+        }
+
+        if (mysqli_query($conn, $sql)) {
+            $id = "";
+            $state = "";
+            $oldUsername = "";
+            $inputUsername = "";
+            $inputFullname = "";
+            $inputContactNo = "";
+        } else {
+            $errorMessage = mysqli_error($conn);
+        }
+    }
+
+    if (isset($_GET["state"])) {
+        if ($_GET["state"] == "delete") {
+            $sql = "DELETE FROM tbl_user WHERE id ='" . $_GET["id"] . "'";
+
+            if (!mysqli_query($conn, $sql)) {
+                $errorMessage = mysqli_error($conn);
+            } else {
+                echo "<script> window.location.href='user.php#'; </script>";
+            }
+        }
+    }
+}
+
+?>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -106,7 +106,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					</button>
-					<a style="color: black; font-weight: bold" class="navbar-brand" href="index.html">Uma Verde Admin</a>
+					<a style="color: black; font-weight: bold" class="navbar-brand" href="dashboard.php#">Uma Verde Admin</a>
 				</div>
 				<ul class="nav navbar-top-links navbar-right">
 					<li class="dropdown">
@@ -114,9 +114,9 @@
 						<i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
 						</a>
 						<ul class="dropdown-menu dropdown-user">
-							<li><a href="login.html"><i class="fa fa-key fa-fw"></i> Change Password</a>
+							<li><a href="index.php"><i class="fa fa-key fa-fw"></i> Change Password</a>
 							</li>
-							<li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+							<li><a href="index.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
 							</li>
 						</ul>
 					</li>
@@ -125,54 +125,54 @@
 					<div class="sidebar-nav navbar-collapse">
 						<ul class="nav" id="side-menu">
 							<li>
-								<a href="dashboard.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+								<a href="dashboard.php#"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
 							</li>
 							<li>
-								<a href="#"><i class="fa fa-table fa-fw"></i> References<span class="fa arrow"></span></a>
+								<a><i class="fa fa-table fa-fw"></i> References<span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level">
 									<li>
 										<a href="#"><i class="fa fa-user fa-fw"></i> Users<span class="fa arrow"></span></a>
 									</li>
 									<li>
-										<a href="product.php"><i class="fa fa-shopping-bag fa-fw"></i> Products<span class="fa arrow"></span></a>
+										<a href="product.php#"><i class="fa fa-shopping-bag fa-fw"></i> Products<span class="fa arrow"></span></a>
 									</li>
 									<li>
-										<a href="tour.php"><i class="fa fa-hotel fa-fw"></i> Tours<span class="fa arrow"></span></a>
+										<a href="tour.php#"><i class="fa fa-hotel fa-fw"></i> Tours<span class="fa arrow"></span></a>
 									</li>
 									<li>
-										<a href="training.php"><i class="fa fa-laptop fa-fw"></i> Trainings<span class="fa arrow"></span></a>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<a href="transaction.php"><i class="fa fa-calculator fa-fw"></i> Transactions<span class="fa arrow"></span></a>
-								<ul class="nav nav-second-level">
-									<li>
-										<a href="transaction.php"><i class="fa fa-shopping-bag fa-fw"></i> Product Orders<span
-											class="fa arrow"></span></a>
-									</li>
-									<li>
-										<a href="transaction.php"><i class="fa fa-hotel fa-fw"></i> Tour Reservations<span
-											class="fa arrow"></span></a>
-									</li>
-									<li>
-										<a href="transaction.php"><i class="fa fa-laptop fa-fw"></i> Training Requests<span
-											class="fa arrow"></span></a>
+										<a href="training.php#"><i class="fa fa-laptop fa-fw"></i> Trainings<span class="fa arrow"></span></a>
 									</li>
 								</ul>
 							</li>
 							<li>
-								<a href="#transaction.php"><i class="fa fa-bar-chart fa-fw"></i> Reports<span class="fa arrow"></span></a>
+								<a><i class="fa fa-calculator fa-fw"></i> Transactions<span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level">
 									<li>
-										<a href="transaction.php"><i class="fa fa-shopping-bag fa-fw"></i> Product Reports<span
+										<a href="transaction.php#"><i class="fa fa-shopping-bag fa-fw"></i> Product Orders<span
 											class="fa arrow"></span></a>
 									</li>
 									<li>
-										<a href="transaction.php"><i class="fa fa-hotel fa-fw"></i> Tour Reports<span class="fa arrow"></span></a>
+										<a href="transaction.php#"><i class="fa fa-hotel fa-fw"></i> Tour Reservations<span
+											class="fa arrow"></span></a>
 									</li>
 									<li>
-										<a href="transaction.php"><i class="fa fa-laptop fa-fw"></i> Training Reports<span
+										<a href="transaction.php#"><i class="fa fa-laptop fa-fw"></i> Training Requests<span
+											class="fa arrow"></span></a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a><i class="fa fa-bar-chart fa-fw"></i> Reports<span class="fa arrow"></span></a>
+								<ul class="nav nav-second-level">
+									<li>
+										<a href="transaction.php#"><i class="fa fa-shopping-bag fa-fw"></i> Product Reports<span
+											class="fa arrow"></span></a>
+									</li>
+									<li>
+										<a href="transaction.php#"><i class="fa fa-hotel fa-fw"></i> Tour Reports<span class="fa arrow"></span></a>
+									</li>
+									<li>
+										<a href="transaction.php#"><i class="fa fa-laptop fa-fw"></i> Training Reports<span
 											class="fa arrow"></span></a>
 									</li>
 								</ul>
@@ -199,7 +199,7 @@
 										</div>
 										<div class="col-lg-6"  style="text-align: right">
 											<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#userModal"
-												onclick="return window.location.href='user.php?state=new'">Add New User</button>
+												onclick="return window.location.href='user.php#?state=new'">Add New User</button>
 										</div>
 									</div>
 								</div>
@@ -207,7 +207,7 @@
 									<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
 										<thead>
 											<tr>
-												<th>Created</th>
+												<th>Updated</th>
 												<th>Username</th>
 												<th>Fullname</th>
 												<th>ContactNo</th>
@@ -216,19 +216,19 @@
 										</thead>
 										<tbody>
 											<?php
-												$q = mysqli_query($conn, "SELECT * FROM tbl_user");
-												while ($r = mysqli_fetch_array($q)) {
-												                                        echo "<tr><td style=\"vertical-align: middle;\">" . $r['updatedAt'] . "</td>";
-												    echo "<td style=\"vertical-align: middle;\">" . $r['username'] . "</td>";
-												    echo "<td style=\"vertical-align: middle;\">" . $r['fullname'] . "</td>";
-												    echo "<td style=\"vertical-align: middle;\">" . $r['contactNo'] . "</td>";
-												    echo "<td style=\"text-align: center; width:15%\">";
-												    ?>
+$q = mysqli_query($conn, "SELECT * FROM tbl_user");
+while ($r = mysqli_fetch_array($q)) {
+    echo "<tr><td style=\"vertical-align: middle;\">" . $r['updatedAt'] . "</td>";
+    echo "<td style=\"vertical-align: middle;\">" . $r['username'] . "</td>";
+    echo "<td style=\"vertical-align: middle;\">" . $r['fullname'] . "</td>";
+    echo "<td style=\"vertical-align: middle;\">" . $r['contactNo'] . "</td>";
+    echo "<td style=\"text-align: center; width:15%\">";
+    ?>
 											<button type="button" class="btn btn-warning btn-circle btn-s"
 												onclick="return window.location.href='user.php?state=edit&id=<?php echo $r['id']; ?>'">
 											<i class="fa fa-edit"></i></button>&nbsp;&nbsp;
 											<a type="button" class="btn btn-danger btn-circle btn-s"
-												onclick="return confirm('Are you sure want to delete this?');"								
+												onclick="return confirm('Are you sure want to delete this?');"
 												href="user.php?state=delete&id=<?php echo $r['id']; ?>">
 											<i class="fa fa-trash"></i></a>
 											<?php }?>
@@ -249,16 +249,16 @@
 						</div>
 						<div class="modal-body">
 							<?php
-								if (isset($_GET["id"])) {
-								                            $id = $_GET["id"];
-								    $q = mysqli_query($conn, "SELECT * FROM tbl_user WHERE id='" . $_GET["id"] . "'");
-								                            $r = mysqli_fetch_array($q);
-								                            $oldUsername = $r["username"];
-								    $inputUsername = $r["username"];
-								    $inputFullname = $r["fullname"];
-								                            $inputContactNo = $r["contactNo"];
-								                        }
-								?>
+if (isset($_GET["id"])) {
+    $id = $_GET["id"];
+    $q = mysqli_query($conn, "SELECT * FROM tbl_user WHERE id='" . $_GET["id"] . "'");
+    $r = mysqli_fetch_array($q);
+    $oldUsername = $r["username"];
+    $inputUsername = $r["username"];
+    $inputFullname = $r["fullname"];
+    $inputContactNo = $r["contactNo"];
+}
+?>
 							<form action="user.php#" method="post">
 								<div class="form-group">
 									<label for="inputUsername" class="col-form-label">Username</label>
@@ -297,23 +297,23 @@
 			    var table = $('#dataTables-example').DataTable({
 					responsive: true
 				});
-			
+
 				table.order([0, 'desc']).draw();
 			         });
-			
+
 			         $('#userModal').on('show.bs.modal', function (event) {
 			             var button = $(event.relatedTarget)
 			             var event = button.data('event');
 			             $state = event;
 			         });
-			
+
 			         <?php
-				if (isset($_GET["state"])) {
-				    if ($_GET["state"] == "new" || $_GET["state"] == "edit") {
-				        echo "$('#userModal').modal('show')";
-				    }
-				}
-				?>
+if (isset($_GET["state"])) {
+    if ($_GET["state"] == "new" || $_GET["state"] == "edit") {
+        echo "$('#userModal').modal('show')";
+    }
+}
+?>
 		</script>
 	</body>
 </html>
